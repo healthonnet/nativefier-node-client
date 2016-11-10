@@ -1,0 +1,23 @@
+{
+  "name": "nativefier-vue",
+  "description": "nativefier service with vueJs & express",
+  "main": "server.js",
+  "authors": [
+    "Adrion <adrion.dev@gmail.com> (cedricfrossard@gmail.com)"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "vue": "^2.0.5",
+    "vue-resource": "^1.0.3"
+  }
+}

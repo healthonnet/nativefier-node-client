@@ -1,0 +1,17 @@
+{
+  "name": "nativefier-vue",
+  "version": "1.0.0",
+  "description": "nativefier service with vueJs & express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adrion <adrion.dev@gmail.com> (cedricfrossard@gmail.com)",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "nativefier": "^7.0.1"
+  }
+}

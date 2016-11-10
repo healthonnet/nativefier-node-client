@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Nativefier Generator</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header id="banner">
+    <div class="container">
+        <h1>Generator</h1>
+        <p class="lead">Nativefy your webapp</p>
+    </div>
+</header>
+
+<!-- main body of our application -->
+<div class="container" id="generator">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Settings:</h1>
+            <div class="form-group">
+                <label for="name">Application name</label>
+                <input class="form-control" type="text" placeholder="App Name" id="name" name="name" v-model="generator.name" />
+                <small id="nameHelp" class="form-text text-muted">
+                    The name of the application, which will affect strings in titles and the icon.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="targetUrl">URL* <span class="text-danger"> (required)</span></label>
+                <input class="form-control" type="text" placeholder="http://getbootstrap.com" id="targetUrl"
+                       v-model="generator.targetUrl" required>
+                <small id="targetUrlHelp" class="form-text text-muted">
+                    The url to point the application at.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="width">Width</label>
+                <input class="form-control" type="number" id="width" v-model="generator.width">
+                <small id="widthHelp" class="form-text text-muted">
+                    Width of the packaged application, defaults to 1280px.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="height">Height</label>
+                <input class="form-control" type="number" id="height" v-model="generator.height">
+                <small id="heightHelp" class="form-text text-muted">
+                    Height of the packaged application, defaults to 800px.</small>
+            </div>
+
+            <div class="form-group">
+                <label>Target Plateforms</label>
+                <div>
+                    <label class="form-check-inline col-xs-4">
+                        <input class="form-check-input" type="radio" id="darwin" v-model="generator.platform" value="darwin">
+                        OS X
+                    </label>
+                    <label class="form-check-inline col-xs-4">
+                        <input class="form-check-input" type="radio" id="windows" v-model="generator.platform" value="windows">
+                        Windows
+                    </label>
+                    <label class="form-check-inline col-xs-4">
+                        <input class="form-check-input" type="radio" id="linux" v-model="generator.platform" value="linux">
+                        Linux
+                    </label>
+                </div>
+                <small id="platformHelp" class="form-text text-muted">
+                    The app will be generated for these platforms.</small>
+            </div>
+
+            <div class="form-group">
+                <label>Target Architecture</label>
+                <div>
+                    <label class="form-check-inline col-xs-4">
+                        <input class="form-check-input" type="radio" id="x64" v-model="generator.arch" value="x64">
+                        64 Bits
+                    </label>
+                    <label class="form-check-inline col-xs-4">
+                        <input class="form-check-input" type="radio" disabled id="ia32" v-model="generator.arch" value="ia32">
+                        32 Bits (not supported yet)
+                    </label>
+                    <label class="form-check-inline col-xs-4">
+                        <input class="form-check-input" type="radio" disabled id="all" v-model="generator.arch" value="all">
+                        All (not supported yet)
+                    </label>
+                </div>
+                <small id="archHelp" class="form-text text-muted">
+                    Processor architecture (32/64 bits).</small>
+            </div>
+
+            <div class="form-group">
+                <label for="conceal" class="form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="conceal" v-model="generator.asar">
+                    Conceal
+                </label>
+                <small id="concealHelp" class="row form-text text-muted">
+                    Specifies if the source code within the nativefied app should be packaged into an archive, defaults to false.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="ignore-certificate" class="form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="ignore-certificate"
+                           v-model="generator.ignoreCertificate">
+                    Ignore-certificate
+                </label>
+                <small id="ignore-certificateHelp" class="row form-text text-muted">
+                    Forces the packaged app to ignore web security errors, such as Mixed Content errors.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="insecure" class="form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="insecure" v-model="generator.insecure">
+                    Insecure
+                </label>
+                <small id="insecureHelp" class="row form-text text-muted">
+                    Forces the packaged app to ignore certificate errors.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="showMenuBar" class="form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="showMenuBar" v-model="generator.showMenuBar">
+                    Show menu bar
+                </label>
+                <small id="showMenuBarHelp" class="row form-text text-muted">
+                    Specifies if the menu bar should be shown.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="honest" class="form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="honest" v-model="generator.honest">
+                    Honest
+                </label>
+                <small id="honestHelp" class="row form-text text-muted">
+                    By default, Nativefier uses a preset user agent string for your OS and masquerades as
+                    a regular Google Chrome browser, so that sites like WhatsApp Web
+                    will not say that the current browser is unsupported.
+                    <p>If this flag is passed, it will not override the user agent.</p>
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="fastQuit" class="form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="fastQuit" v-model="generator.fastQuit">
+                    fastQuit
+                </label>
+                <small id="fastQuitHelp" class="row form-text text-muted">
+                    (OSX Only) Specifies to quit the app after closing all windows, defaults to false.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="zoom">Zoom</label>
+                <input class="form-control" type="number" step="any" min="0" id="zoom" v-model="generator.zoom">
+                <small id="zoomHelp" class="form-text text-muted">
+                    Sets a default zoom factor to be used when the app is opened, defaults to 1.0.</small>
+            </div>
+
+            <div class="form-group">
+                <button v-on:click="submit" class="btn btn-primary btn-block btn-lg">Nativefy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JS -->
+<script src="lib/vue/dist/vue.js"></script>
+<script src="lib/vue-resource/dist/vue-resource.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
